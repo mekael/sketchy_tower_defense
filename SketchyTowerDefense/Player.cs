@@ -28,7 +28,7 @@ namespace TowerDefense
       : base("Sprites/Characters/player", 1, 1)
     {
       this.scale = 1f;
-      this.color = new Color(Color.White, this.fade);
+      this.color = new Color(255,255,255, this.fade);
       this.money = 0;
       this.life = 10;
     }

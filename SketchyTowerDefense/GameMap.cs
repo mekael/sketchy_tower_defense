@@ -760,7 +760,7 @@ namespace TowerDefense
           else if (this.gameSpeed == GameSpeed.FAST)
             this.currentSpeed = MathHelper.Lerp(this.currentSpeed, 6f, 0.1f);
           TimeSpan timeSpan = new TimeSpan((long) ((double) gameTime.ElapsedGameTime.Ticks * (double) this.currentSpeed));
-          gameTime = new GameTime(gameTime.TotalRealTime, gameTime.ElapsedRealTime, gameTime.TotalGameTime, timeSpan, false);
+          gameTime = new GameTime(gameTime.TotalGameTime, timeSpan);
           foreach (Sprite sprite in this.items)
             sprite.Update(gameTime);
           foreach (Sprite monster in this.monsters)

@@ -6,12 +6,9 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace TowerDefense
 {
@@ -226,9 +223,10 @@ namespace TowerDefense
       yoffset += 100f;
       spriteBatch.Draw(this.levelSelectLeftTexture, new Vector2((float) (this.game.dim.Width / 2 - this.levelSelectLeftTexture.Width / 2 - 300 + num), (float) ((int) yoffset + 50)), new Color((byte) 0, (byte) 0, (byte) 0, (byte) ((double) this.levelLeftFade * (double) byte.MaxValue)));
       spriteBatch.Draw(this.levelSelectRightTexture, new Vector2((float) (this.game.dim.Width / 2 - this.levelSelectRightTexture.Width / 2 + 290 + num), (float) ((int) yoffset + 50)), new Color((byte) 0, (byte) 0, (byte) 0, (byte) ((double) this.levelRightFade * (double) byte.MaxValue)));
-      if (!noTrial || !Guide.IsTrialMode)
-        return;
-      spriteBatch.Draw(this.guiNoTrialTexture, new Vector2((float) (this.game.dim.Width / 2 - this.guiNoTrialTexture.Width / 2 - 5 + num), (float) ((int) yoffset + 30)), Color.White);
+     // if (!noTrial || !Guide.IsTrialMode)
+      //  return;
+
+//      spriteBatch.Draw(this.guiNoTrialTexture, new Vector2((float) (this.game.dim.Width / 2 - this.guiNoTrialTexture.Width / 2 - 5 + num), (float) ((int) yoffset + 30)), Color.White);
     }
 
     public void DrawOptions(GameTime gameTime, SpriteBatch spriteBatch, float yoffset)
@@ -351,7 +349,7 @@ namespace TowerDefense
           }
           if (levelDefinition != null)
           {
-            if (!levelDefinition.noTrial || !Guide.IsTrialMode)
+            if (!levelDefinition.noTrial )
             {
               switch (this.currentMenu.name)
               {

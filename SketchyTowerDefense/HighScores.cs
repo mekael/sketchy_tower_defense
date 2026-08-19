@@ -24,7 +24,7 @@ namespace TowerDefense
 
     public void SaveScores()
     {
-      FileStream fileStream = File.Open(Path.Combine(StorageContainer.TitleLocation, "highscores.dat"), FileMode.OpenOrCreate);
+      FileStream fileStream = File.Open(Path.Combine( "highscores.dat"), FileMode.OpenOrCreate);
       try
       {
         new XmlSerializer(typeof (HighScores)).Serialize((Stream) fileStream, (object) this);
@@ -37,7 +37,7 @@ namespace TowerDefense
 
     public static HighScores LoadHighScores()
     {
-      string path = Path.Combine(StorageContainer.TitleLocation, "highscores.dat");
+      string path = Path.Combine( "highscores.dat");
       if (!File.Exists(path))
         return HighScores.NewHighScores();
       FileStream fileStream = File.Open(path, FileMode.OpenOrCreate, FileAccess.Read);
