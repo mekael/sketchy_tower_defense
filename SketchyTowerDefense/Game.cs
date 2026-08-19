@@ -1702,7 +1702,7 @@ namespace TowerDefense
         {
             this.graphics.PreferredBackBufferWidth = this.dim.Width;
             this.graphics.PreferredBackBufferHeight = this.dim.Height;
-            this.graphics.IsFullScreen = false;
+            this.graphics.IsFullScreen = true;
             this.graphics.ApplyChanges();
             this.globalScale = ((float)this.graphics.GraphicsDevice.Viewport.TitleSafeArea.Width + (float)(((double)this.graphics.GraphicsDevice.Viewport.Width - (double)this.graphics.GraphicsDevice.Viewport.TitleSafeArea.Width) / 2.0)) / (float)this.dim.Width;
             Game.audioEngine = new AudioEngine("Content\\Sounds\\td_sounds.xgs");
