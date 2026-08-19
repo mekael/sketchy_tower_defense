@@ -1,0 +1,63 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    name: Release
+    strategy:
+      matrix:
+     #   kind: ['windows', 'linux']
+        kind: ['windows']
+        include:
+          #- kind: linux
+          #  os: ubuntu-latest
+          #  target: linux-x64
+          - kind: windows
+            os: windows-latest
+            target: win-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'ga'
+
+      - name: Build
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+
+          release_suffix="$tag-${{ matrix.target }}"
+          release_name="SketchyTowerDefense-$release_suffix"
+          self_contained_release_name="SketchyTowerDefense-SingleFile-$release_suffix"
+
+          # Build everything
+          dotnet publish SketchyTowerDefense/SketchyTowerDefense.csproj --self-contained --framework net10.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
+          dotnet publish SketchyTowerDefense/SketchyTowerDefense.csproj --self-contained --framework net10.0 --runtime "${{ matrix.target }}" -c Release -o "$self_contained_release_name" -p:PublishSingleFile=true
+
+          # Pack files
+          if [ "${{ matrix.target }}" == "win-x64" ]; then
+            # Pack to zip for Windows
+            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            7z a -tzip "${self_contained_release_name}.zip" "./${self_contained_release_name}/*"
+          #else
+            #tar czvf "${release_name}.tar.gz" "$release_name"
+            #tar czvf "${self_contained_release_name}.tar.gz" "$self_contained_release_name"
+          fi
+
+          # Delete output directory
+          rm -r "$release_name"
+
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "SketchyTowerDefense*.zip"
